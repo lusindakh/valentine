@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Will You Be My Valentine? 💖</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+    body {
+        margin: 0;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: linear-gradient(135deg, #ffe6f0, #ffd6eb);
+        font-family: 'Poppins', sans-serif;
+        overflow: hidden;
+        text-align: center;
+    }
+
+    .container {
+        position: relative;
+    }
+
+    h1 {
+        font-family: 'Pacifico', cursive;
+        font-size: 2.5rem;
+        color: #ff4d88;
+        margin-bottom: 20px;
+    }
+
+    img {
+        width: 250px;
+        height: auto;
+        border-radius: 15px;
+        margin-bottom: 20px;
+        transition: 0.3s ease;
+    }
+
+    .buttons {
+        position: relative;
+        height: 100px;
+    }
+
+    button {
+        padding: 12px 25px;
+        font-size: 18px;
+        border: none;
+        border-radius: 30px;
+        cursor: pointer;
+        transition: 0.2s ease;
+        position: absolute;
+    }
+
+    #yesBtn {
+        background-color: #ff4d88;
+        color: white;
+        left: 40%;
+    }
+
+    #yesBtn:hover {
+        transform: scale(1.1);
+    }
+
+    #noBtn {
+        background-color: #999;
+        color: white;
+        left: 60%;
+    }
+
+    .celebrate {
+        animation: pop 0.4s ease forwards;
+    }
+
+    @keyframes pop {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.3); }
+        100% { transform: scale(1); }
+    }
+
+    .hearts {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        top: 0;
+        left: 0;
+        overflow: hidden;
+    }
+
+    .heart {
+        position: absolute;
+        font-size: 24px;
+        animation: floatUp 2s linear forwards;
+    }
+
+    @keyframes floatUp {
+        from { transform: translateY(0); opacity: 1; }
+        to { transform: translateY(-200px); opacity: 0; }
+    }
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <h1 id="question">Will you be my Valentine? 💖</h1>
+
+    <!-- Replace this GIF with one you like -->
+    <img id="mainGif" src="https://media.giphy.com/media/3oriO0OEd9QIDdllqo/giphy.gif" alt="Puppy eyes">
+
+    <div class="buttons">
+        <button id="yesBtn">YES 💖</button>
+        <button id="noBtn">NO 😢</button>
+    </div>
+
+    <div class="hearts" id="hearts"></div>
+</div>
+
+<script>
+const yesBtn = document.getElementById("yesBtn");
+const noBtn = document.getElementById("noBtn");
+const gif = document.getElementById("mainGif");
+const question = document.getElementById("question");
+const heartsContainer = document.getElementById("hearts");
+
+let yesScale = 1;
+
+// 💖 YES BUTTON
+yesBtn.addEventListener("click", () => {
+    question.textContent = "YAYYYYY 💕 I LOVE YOUUUU!!! 💕";
+    
+    gif.src = "https://media.giphy.com/media/MDJ9IbxxvDUQM/giphy.gif"; // celebration gif
+    
+    yesBtn.classList.add("celebrate");
+    noBtn.style.display = "none";
+    
+    createHearts();
+});
+
+// 😈 NO BUTTON (UNCLICKABLE DRAMA)
+noBtn.addEventListener("mouseover", moveNoButton);
+noBtn.addEventListener("touchstart", moveNoButton);
+
+function moveNoButton() {
+    const container = document.querySelector(".buttons");
+    const containerRect = container.getBoundingClientRect();
+    
+    const maxX = container.offsetWidth - noBtn.offsetWidth;
+    const maxY = container.offsetHeight - noBtn.offsetHeight;
+
+    const randomX = Math.floor(Math.random() * maxX);
+    const randomY = Math.floor(Math.random() * maxY);
+
+    noBtn.style.left = randomX + "px";
+    noBtn.style.top = randomY + "px";
+
+    yesScale += 0.1;
+    yesBtn.style.transform = `scale(${yesScale})`;
+
+    const messages = [
+        "Are you sure? 🥺",
+        "Really??",
+        "Don't do this 😭",
+        "Please nooo 💔",
+        "I’ll cry 😭"
+    ];
+
+    noBtn.textContent = messages[Math.floor(Math.random() * messages.length)];
+}
+
+// 💕 Floating Hearts Effect
+function createHearts() {
+    for (let i = 0; i < 20; i++) {
+        const heart = document.createElement("div");
+        heart.classList.add("heart");
+        heart.innerHTML = "💖";
+        heart.style.left = Math.random() * 100 + "%";
+        heart.style.top = "80%";
+        heart.style.fontSize = (Math.random() * 20 + 20) + "px";
+        heartsContainer.appendChild(heart);
+
+        setTimeout(() => heart.remove(), 2000);
+    }
+}
+</script>
+
+</body>
+</html>
